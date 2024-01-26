@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>SimpleReports</PackageId>
+		<Title>SimpleReports</Title>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>Alexey Varentsov (@imato)</Authors>
+		<Company>Imato</Company>
+		<PackageProjectUrl>https://github.com/Imato/Imato.Dapper.DbContext</PackageProjectUrl>
+		<Description>Add SQL reports to your ASP site</Description>
+		<Summary></Summary>
+		<RepositoryUrl>https://github.com/Imato/SimpleReports</RepositoryUrl>
+		<PackageTags>SQL Reports ASP Blazor</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReleaseNotes>Ready to use</PackageReleaseNotes>
+		<Version>1.0.0</Version>
+		<AssemblyName>SimpleReports</AssemblyName>
+		<PackageIcon>icon.png</PackageIcon>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<DebugType>portable</DebugType>
+		<Copyright>Alexey Varentsov</Copyright>
+		<RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\icon.png" Pack="true" Visible="false" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="Dapper" Version="2.1.28" />
+	  <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
+	  <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
+	  <PackageReference Include="MudBlazor" Version="6.11.2" />
+	  <PackageReference Include="MySql.Data" Version="8.2.0" />
+	  <PackageReference Include="Npgsql" Version="8.0.1" />
+	</ItemGroup>
+	
+  <ItemGroup>
+    <Content Update="wwwroot\reports\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	   <PackageCopyToOutput>true</PackageCopyToOutput>
+	  <pack>true</pack>
+    </Content>
+  </ItemGroup>
+
+
+</Project>

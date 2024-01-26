@@ -1,0 +1,8 @@
+﻿<h3>DataTable</h3>
+
+@code {
+    [CascadingParameter(Name = "Report")]
+    public Report Report { get; set; } = null!;
+    [Parameter]
+    public object?[] Data { get; set; } = null!;
+}

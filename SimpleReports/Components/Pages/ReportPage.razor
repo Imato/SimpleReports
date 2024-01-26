@@ -1,0 +1,65 @@
+﻿@page "/report/{name}/{*Query}"
+@inject IReportService ReportService
+
+<PageTitle>@ReportService.ReportServerName(): @report.ViewName</PageTitle>
+
+<CascadingValue Value=@report Name="Report">
+     <ReportHeader />
+     <ReportParameters OnExecute=@ExecuteAsync OnCancel=@Cancel />
+     <ReportDataTable />
+     <ReportFooter Statistic=@statistic  />
+</CascadingValue>
+
+
+
+<Footer Statistic=@statistic />
+
+@code
+    {
+    [Parameter]
+    public string Name { get; set; } = null!;
+    [Parameter]
+    public string Query { get; set; } = null!;
+
+    private Report report = null!;
+    private ReportColumn[] columns = null!;
+    private Dictionary<string, object> parameters = null!;
+    private ExecutionStatistic statistic = new();
+    private List<object?[]> data = new();
+    private CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+
+    protected override async Task OnInitializedAsync() 
+    {
+        await base.OnInitializedAsync();
+        report = ReportService.GetReport(Name ?? "");
+        columns = report.Columns;
+
+    }
+
+    protected async Task ExecuteAsync()
+    {
+        statistic.StartDate = DateTime.Now;
+        var token = tokenSource.Token;
+        await foreach (var row in 
+                ReportService.GetReportDataAsync(report.Source.ConnectionString,
+                    report.Sql,
+                    columns,
+                    parameters).WithCancellation(token))
+        {
+            data.Add(row);
+        }
+        statistic.Duration = (DateTime.Now - statistic.StartDate).TotalSeconds;
+        statistic.Rows = data.Count;
+    }
+
+    protected void Cancel()
+    {
+        if (!tokenSource.IsCancellationRequested)
+        {
+            tokenSource.Cancel();
+        }
+    }
+}
+
+

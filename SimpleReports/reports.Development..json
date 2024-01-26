@@ -1,0 +1,69 @@
+{
+  "ReportServer": {
+    "Sources": [
+      {
+        "Name": "unit tests",
+        "ConnectionString": "Data Source=localhost;Initial Catalog=unit_tests;Persist Security Info=True;User ID={UNIT_TESTS_USER};Password={UNIT_TESTS_PASSWORD};"
+      }
+    ],
+    "Reports": [
+      {
+        "Name": "EmployeeManagers",
+        "ViewName": "Employee Managers",
+        "Path": "Tests/Managers Reports",
+        "Source": "unit tests",
+        "Sql": "exec [dbo].[uspGetEmployeeManagers] @BusinessEntityID",
+        "Columns": [
+          {
+            "Name": "RecursionLevel",
+            "ViewName": "Level",
+            "Type": "numeric",
+            "Format": "N0"
+          },
+          {
+            "Name": "FirstName",
+            "ViewName": "First Name",
+            "Type": "text"
+          },
+          {
+            "Name": "LastName",
+            "ViewName": "Last Name",
+            "Type": "text"
+          },
+          {
+            "Name": "OrganizationNode",
+            "ViewName": "Organization",
+            "Type": "text"
+          },
+          {
+            "Name": "ManagerFirstName",
+            "ViewName": "Manager First Name",
+            "Type": "text"
+          },
+          {
+            "Name": "ManagerLastName",
+            "ViewName": "Manager Last Name",
+            "Type": "text"
+          }
+        ],
+        "Parameters": [
+          {
+            "Name": "BusinessEntityID",
+            "ViewName": "Business Entity ID",
+            "Type": "numeric",
+            "Format": "N0"
+          }
+        ]
+      },
+      {
+        "Name": "Errors",
+        "ViewName": "System errors",
+        "Path": "Tests/Errors",
+        "Source": "unit tests",
+        "Sql": "select top 100 * from [dbo].[ErrorLog] order by [ErrorTime] desc",
+        "Columns": [],
+        "Parameters": []
+      }
+    ]
+  }
+}

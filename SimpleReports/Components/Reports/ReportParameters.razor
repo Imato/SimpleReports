@@ -1,0 +1,10 @@
+﻿<h3>Parameters</h3>
+
+@code {
+    [CascadingParameter(Name = "Report")]
+    public Report Report { get; set; } = null!;
+    [Parameter]
+    public EventCallback OnExecute { get; set; }
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}

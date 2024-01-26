@@ -1,0 +1,9 @@
+﻿<h3>Footer</h3>
+<p></p>
+
+@code {
+    [Parameter, EditorRequired]
+    public ExecutionStatistic Statistic { get; set; } = null!;
+    [CascadingParameter(Name = "Report")]
+    public Report Report { get; set; } = null!;
+}
